@@ -2,10 +2,10 @@ import unittest
 
 import numpy as np
 import collections
-import sklearn  # noqa
+import sklearn
 import sklearn.datasets
 import sklearn.ensemble
-import sklearn.linear_model  # noqa
+import sklearn.linear_model
 from numpy.testing import assert_array_equal
 from sklearn.datasets import load_iris, make_classification, make_multilabel_classification
 from sklearn.ensemble import RandomForestClassifier
