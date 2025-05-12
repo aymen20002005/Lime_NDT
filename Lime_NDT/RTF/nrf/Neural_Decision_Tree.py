@@ -8,22 +8,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 # from collections import OrderedDict
-from keras import backend as K
-from keras import optimizers
-from keras.callbacks import Callback  # , ModelCheckpoint, EarlyStopping
-from keras.activations import tanh
-from keras.layers import Dense, Input, Layer
-from keras.models import Model, Sequential
-from keras.regularizers import l1
-from keras.utils import to_categorical
+from tensorflow.keras import backend as K
+from tensorflow.keras import optimizers
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.activations import tanh
+from tensorflow.keras.layers import Dense, Input, Layer
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.regularizers import l1
+from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import accuracy_score, mean_squared_error, r2_score
-from tensorflow import logging
 
 # sys.path.append("../utils")
 # from common_functions import find_parent
 # from common_functions import leaves_id
 # from common_functions import get_list_split_phi_forest
-from ..utils.common_functions import (get_list_split_phi,
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from utils.common_functions import (get_list_split_phi,
 									  get_parents_nodes_leaves_dic,
 							  		  print_decision_path)
 
@@ -144,8 +146,6 @@ class CustomEarlyStopping(Callback):
         self.best_weights_epoch = 0
 
         if mode not in ['auto', 'min', 'max']:
-            logging.warning('EarlyStopping mode %s is unknown, '
-                            'fallback to auto mode.', mode)
             mode = 'auto'
 
         if mode == 'min':
@@ -171,7 +171,7 @@ class CustomEarlyStopping(Callback):
         if self.baseline is not None:
             self.best = self.baseline
         else:
-            self.best = np.Inf if self.monitor_op == np.less else -np.Inf
+            self.best = np.inf if self.monitor_op == np.less else -np.inf  # Use np.inf instead of np.Inf
 
     def on_epoch_end(self, epoch, logs=None):
         current = self.get_monitor_value(logs)
@@ -204,10 +204,6 @@ class CustomEarlyStopping(Callback):
     def get_monitor_value(self, logs):
         logs = logs or {}
         monitor_value = logs.get(self.monitor)
-        if monitor_value is None:
-            logging.warning('Early stopping conditioned on metric `%s` '
-                            'which is not available. Available metrics are: %s',
-                            self.monitor, ','.join(list(logs.keys())))
         return monitor_value
 
 class ndt:
@@ -312,11 +308,15 @@ class ndt:
 		else:
 			self.C = 1
 			mean_leaf_values = decision_tree.tree_.value[list(self.leaves.keys())]
-			mean_leaf_values = mean_leaf_values.reshape(self.L, self.C)
-			self.W_leaves_out = pd.DataFrame(mean_leaf_values,
+			# Debug
+			print("mean_leaf_values shape:", mean_leaf_values.shape)
+			print("self.L:", self.L, "self.C:", self.C)
+			mean_leaf_values = np.squeeze(mean_leaf_values, axis=1)
+			print("mean_leaf_values shape after squeeze:", mean_leaf_values.shape)
+			self.W_leaves_out = pd.DataFrame(mean_leaf_values[:, :1],  # Ensure shape is (186, 1)
 											 index=self.leaves.keys(),
-											 columns=["Mean values/2"])
-			self.W_leaves_out = self.W_leaves_out/2
+											 columns=["Mean values/1"])
+			self.W_leaves_out = self.W_leaves_out / 2
 
 			self.b_out = pd.DataFrame(np.sum(mean_leaf_values),
 									  index=[self.C],
@@ -351,7 +351,7 @@ class ndt:
 	def to_keras(self, loss,
 				 metrics=[], optimizer=optimizers.Adam,
 				 kernel_regularizer=[None, None, None],
-				 optimizer_params={"lr": 0.001, "beta_1": 0.9,
+				 optimizer_params={"learning_rate": 0.001, "beta_1": 0.9,
 								   "beta_2": 0.999, "epsilon": 1e-8,
 								   "decay": 1e-6}):
 		"""
@@ -1013,7 +1013,7 @@ if __name__ == "__main__":
 
 	a = ndt(D=2, gammas=[1, 5, 1], tree_id=0)
 	a.compute_matrices_and_biases(clf)
-	a.to_keras(dropouts=[0., 0., 0.])
+	a.to_keras(loss='mean_squared_error')
 	print("FLOPs before:", a.count_ops)
 	a.fit(X, Y)
 	print("FLOPs after:", a.count_ops)
