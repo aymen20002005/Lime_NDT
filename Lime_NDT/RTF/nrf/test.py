@@ -1,5 +1,5 @@
 from Neural_Decision_Tree import NDTClassifier
-from sklearn.tree import DecisionTreeClassifier  #, export_graphviz
+from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd

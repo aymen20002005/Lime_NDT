@@ -1011,40 +1011,12 @@ if __name__ == "__main__":
 	clf = DecisionTreeClassifier(max_depth=10)
 	clf = clf.fit(X, Y)
 
-	a = ndt(D=2, gammas=[1, 5, 1], tree_id=0)
+	a = ndt(D=2, gammas=[1, 100, 100], tree_id=0)
 	a.compute_matrices_and_biases(clf)
 	a.to_keras(loss='mean_squared_error')
 	print("FLOPs before:", a.count_ops)
 	a.fit(X, Y)
 	print("FLOPs after:", a.count_ops)
-
-	# arch = [2 for k in range(2)]
-	# model = generateNN(arch, ['tanh', 'tanh'], 2, 2)
-	# print(model.count_ops)
-
-	# a.get_weights_from_NN()
-	# children_right, children_left, thresholds, features = a.neural_network_to_tree()
-
-	# children_right, children_left, thresholds, features = a.neural_network_to_tree(a.W_nodes_leaves_nn, a.W_in_nodes_nn, a.b_nodes_nn, 0.9)
-	#
-	# children_right, children_left, thresholds, features = a.neural_network_to_tree()
-	# children_right.index = [int(val.split("_")[-1]) for val in children_right.index]
-	# children_right = children_right.sort_index()
-	# children_left.index = [int(val.split("_")[-1]) for val in children_left.index]
-	# children_left = children_left.sort_index()
-	# thresholds.index = [int(val.split("_")[-1]) for val in thresholds.index]
-	# thresholds = thresholds.sort_index()
-	# features.index = [int(val.split("_")[-1]) for val in features.index]
-	# features = features.sort_index()
-
-	# np.savetxt("left_true.csv",clf.tree_.children_left.astype(int), fmt='%i')
-	# np.savetxt("right_true.csv",clf.tree_.children_right.astype(int), fmt='%i')
-	# np.savetxt("feature_true.csv",clf.tree_.feature.astype(int), fmt='%i')
-	# np.savetxt("thresholds_true.csv",clf.tree_.threshold, fmt='%f')
-	# children_left.to_csv("try_left.csv")
-	# children_right.to_csv("try_right.csv")
-	# thresholds.to_csv("try_thresholds.csv")
-	# features.to_csv("try_features.csv")
 
 	print("scores before training")
 	print(a.score(X_test, Y_test))
@@ -1056,43 +1028,3 @@ if __name__ == "__main__":
 	print("scores after training")
 	print(a.score(X_test, Y_test))
 	print(a.score(X, Y))
-
-	# print("Tree weights")
-	# a.print_tree_weights()
-	# print("NN weights")
-	# a.print_nn_weights()
-	# print "activations"
-	# print a.get_activations(X)
-	# differences = a.compute_weights_differences()
-	# a.plot_differences()
-	# a.plot_old_new_network()
-
-	# import networkx as nx
-	# from networkx.drawing.nx_agraph import write_dot
-
-	# def plot_tree_like(children_left, children_right):
-	# 	G = nx.DiGraph()
-	# 	for node in children_right.index:
-	# 		G.add_node(node)
-	# 	for i, parent in enumerate(children_right.index):
-	# 		child = children_right[parent]
-	# 		if child == LEAVES or child == EMPTY_NODE:
-	# 			child = str(child)+"_"+str(i)
-	# 		else:
-	# 			child = "0_"+str(child)
-	# 		G.add_edge(parent, child)
-	# 	for i, parent in enumerate(children_left.index):
-	# 		child = children_left[parent]
-	# 		if child == LEAVES or child == EMPTY_NODE:
-	# 			child = str(child)+"_"+str(i)
-	# 		else:
-	# 			child = "0_"+str(child)
-	# 		G.add_edge(parent, child)
-	# 	return G
-	# children_right, children_left, thresholds, features = a.neural_network_to_tree(a.W_nodes_leaves_nn, a.W_in_nodes_nn, a.b_nodes_nn, 0.9)
-	# G = plot_tree_like(children_left, children_right)
-	# write_dot(G, "test.dot")
-
-	# children_right, children_left, thresholds, features = a.neural_network_to_tree(threshold=0.1)
-	# G = plot_tree_like(children_left, children_right)
-	# write_dot(G, "test_prev.dot")
