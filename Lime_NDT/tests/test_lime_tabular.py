@@ -2,22 +2,15 @@ import unittest
 
 import numpy as np
 import collections
-import sklearn
-import sklearn.datasets
-import sklearn.ensemble
-import sklearn.linear_model
 from numpy.testing import assert_array_equal
 from sklearn.datasets import load_iris, make_classification, make_multilabel_classification
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from Lime_NDT.discretize import QuartileDiscretizer, DecileDiscretizer, EntropyDiscretizer
-
-
-try:
-    from sklearn.model_selection import train_test_split
-except ImportError:
-    # Deprecated in scikit-learn version 0.18, removed in 0.20
-    from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 
 from Lime_NDT.lime_tabular import LimeTabularExplainer
 
