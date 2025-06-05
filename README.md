@@ -1,6 +1,6 @@
-# Lime_NDT
+# lime_ndt
 
-Lime_NDT is a Python library that introduces an enhanced version of the LIME technique for model explainability, leveraging Neural Decision Trees (NDTs) for improved local and global interpretability of machine learning models.
+lime_ndt is a Python library that introduces an enhanced version of the LIME technique for model explainability, leveraging Neural Decision Trees (NDTs) for improved local and global interpretability of machine learning models.
 
 ## Features
 
@@ -12,14 +12,14 @@ Lime_NDT is a Python library that introduces an enhanced version of the LIME tec
 
 ## Example Usage
 
-Below is a minimal example showing how to use Lime_NDT to explain a regression model on the diabetes dataset:
+Below is a minimal example showing how to use lime_ndt to explain a regression model on the diabetes dataset:
 
 ```python
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from Lime_NDT.lime_tabular import LimeTabularExplainer
-from Lime_NDT.utils.ndt_sklearn_wrapper import NDTRegressorWrapper
+from lime_ndt.lime_tabular import LimeTabularExplainer
+from lime_ndt.utils.ndt_sklearn_wrapper import NDTRegressorWrapper
 import matplotlib.pyplot as plt
 
 # Load the diabetes dataset
