@@ -9,10 +9,10 @@ from sklearn.linear_model import LinearRegression
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from Lime_NDT.discretize import QuartileDiscretizer, DecileDiscretizer, EntropyDiscretizer
+from lime_ndt.discretize import QuartileDiscretizer, DecileDiscretizer, EntropyDiscretizer
 from sklearn.model_selection import train_test_split
 
-from Lime_NDT.lime_tabular import LimeTabularExplainer
+from lime_ndt.lime_tabular import LimeTabularExplainer
 
 
 class TestLimeTabular(unittest.TestCase):

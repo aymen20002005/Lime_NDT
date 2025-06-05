@@ -3,7 +3,7 @@ Contains abstract functionality for learning locally linear sparse model.
 """
 import numpy as np
 import scipy as sp
-#from Lime_NDT import RTF
+#from lime_ndt import RTF
 from sklearn.linear_model import Ridge, lars_path
 from sklearn.utils import check_random_state
 

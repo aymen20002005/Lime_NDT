@@ -14,11 +14,11 @@ import sklearn.preprocessing
 from sklearn.utils import check_random_state
 from scipy.stats.distributions import norm
 
-from Lime_NDT.discretize import QuartileDiscretizer
-from Lime_NDT.discretize import DecileDiscretizer
-from Lime_NDT.discretize import EntropyDiscretizer
-from Lime_NDT.discretize import BaseDiscretizer
-from Lime_NDT.discretize import StatsDiscretizer
+from lime_ndt.discretize import QuartileDiscretizer
+from lime_ndt.discretize import DecileDiscretizer
+from lime_ndt.discretize import EntropyDiscretizer
+from lime_ndt.discretize import BaseDiscretizer
+from lime_ndt.discretize import StatsDiscretizer
 from . import explanation
 from . import lime_base
 

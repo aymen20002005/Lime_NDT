@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from Lime_NDT.utils.generic_utils import has_arg
+from lime_ndt.utils.generic_utils import has_arg
 
 
 class TestGenericUtils(unittest.TestCase):
