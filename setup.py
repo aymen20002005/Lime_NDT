@@ -13,6 +13,10 @@ setup(
     install_requires=[
         "numpy",
         "pandas",
+        "scikit-learn",
+        "matplotlib",
+        "keras",
+        "tensorflow",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
